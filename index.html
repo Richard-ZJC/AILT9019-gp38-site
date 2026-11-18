@@ -7,161 +7,116 @@
 <meta name="description" content="A brand-aware packaging sorting assistant for HKU campus recycling. Enter a product, get the correct bin and the official rule behind it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f4f1e8; --paper-2:#fbfaf5; --card:#ffffff;
-    --ink:#16251f; --muted:#5b6a62; --line:#dedbd0;
-    --forest:#0c3b32; --forest-2:#125445; --mint:#d9ebe2;
-    --bin-paper:#3b6fb6; --bin-metal:#8c9aa5; --bin-bottle:#e0a326;
-    --bin-plastic:#3e9d6e; --bin-general:#4a4f52;
-    --coral:#c8553d; --radius:14px;
-    --display:"Fraunces",Georgia,serif;
-    --body:"DM Sans",system-ui,sans-serif;
+    --bg:#faf9f7; --surface:#ffffff; --ink:#1b2420; --muted:#59655f;
+    --line:#e3e5e1; --accent:#175743; --accent-dark:#0f4132; --accent-soft:#eff4f1;
+    --radius:8px;
+    --font:"Noto Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;
-    background-color:var(--paper);
-    background-image:radial-gradient(circle at 15% 0%,rgba(12,59,50,.055),transparent 42%),
-                     radial-gradient(circle at 88% 6%,rgba(224,163,38,.07),transparent 38%)}
-  a{color:var(--forest-2);text-underline-offset:3px}
-  a:hover{color:var(--coral)}
-  :focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
-  section{scroll-margin-top:84px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16.5px;line-height:1.72}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent);text-underline-offset:3px}
+  a:hover{color:var(--accent-dark)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  section{scroll-margin-top:80px}
+  h1,h2,h3{font-weight:700;letter-spacing:-.02em;line-height:1.25}
+  h1{font-size:clamp(2.1rem,5vw,3.1rem);line-height:1.18;margin:0 0 18px;max-width:19ch}
+  h2{font-size:clamp(1.5rem,3vw,2rem);margin:0 0 8px}
+  h3{font-size:1.1rem;margin:26px 0 8px}
+  p{margin:0 0 14px}
+  ul,ol{padding-left:22px;margin:0 0 14px}
+  li{margin-bottom:7px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  code.inline{background:#f0f2ef;border-radius:4px;padding:1px 5px;font-size:.88em}
 
-  header{position:sticky;top:0;z-index:20;background:rgba(244,241,232,.9);
-    backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
-  .head-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding:12px 0}
-  .brand{font-family:var(--display);font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
-  .brand span{display:block;font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--muted)}
-  nav{display:flex;gap:2px;flex-wrap:wrap}
-  nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 11px;text-decoration:none;
-    color:var(--muted);font-size:13.5px;font-weight:600;border-radius:8px}
-  nav a:hover{color:var(--forest);background:var(--mint)}
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+  .head-in{display:flex;align-items:center;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;min-height:66px}
+  .brand{color:var(--ink);text-decoration:none;font-size:16px;font-weight:700;line-height:1.3}
+  .brand small{display:block;color:var(--muted);font-size:11.5px;font-weight:500;letter-spacing:.02em}
+  nav{display:flex;gap:4px;flex-wrap:wrap}
+  nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 9px;text-decoration:none;
+        color:var(--muted);font-size:13.5px;font-weight:600;border-bottom:2px solid transparent}
+  nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 
-  .hero{background:var(--forest);color:#eaf3ee;position:relative;overflow:hidden}
-  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(circle at 82% 18%,rgba(224,163,38,.16),transparent 34%)}
-  .hero-in{position:relative;z-index:1;padding:66px 0 0}
-  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-    color:#0c3b32;background:#e9c76a;border-radius:99px;padding:7px 15px;margin-bottom:24px}
-  h1{font-family:var(--display);font-weight:600;font-size:clamp(2.4rem,6.2vw,4.1rem);
-    line-height:1.06;letter-spacing:-.025em;max-width:15ch;margin:0 0 22px}
-  .lede{font-size:1.09rem;line-height:1.72;color:#c3d8cd;max-width:60ch;margin:0 0 32px}
-  .cta{display:flex;flex-wrap:wrap;gap:12px;padding-bottom:52px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;
-    border-radius:10px;font-size:14.5px;font-weight:700;text-decoration:none;border:1.5px solid transparent;
-    transition:transform .12s ease,background .12s ease}
-  .btn:hover{transform:translateY(-2px)}
-  .btn-gold{background:#e9c76a;color:#0c3b32}
-  .btn-gold:hover{background:#f3d68a;color:#0c3b32}
-  .btn-ghost{border-color:rgba(234,243,238,.45);color:#eaf3ee}
-  .btn-ghost:hover{background:rgba(234,243,238,.1);color:#fff}
+  /* Hero */
+  .hero{background:var(--surface);border-bottom:1px solid var(--line);padding:70px 0 56px}
+  .lede{font-size:1.05rem;color:var(--muted);max-width:64ch;margin:0 0 28px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;
+       border:1px solid var(--accent);border-radius:var(--radius);font-size:14.5px;font-weight:600;
+       text-decoration:none}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-dark);color:#fff}
+  .btn-secondary{background:var(--surface);color:var(--accent)}
+  .btn-secondary:hover{background:var(--accent-soft);color:var(--accent-dark)}
+  .bins{border-top:1px solid var(--line);padding-top:22px;display:flex;flex-wrap:wrap;gap:6px 0;
+        list-style:none;margin:0;font-size:14px;color:var(--muted)}
+  .bins li{display:flex;align-items:center;margin:0}
+  .bins li+li::before{content:"·";color:#b9c0bb;margin:0 12px}
+  .bins b{color:var(--ink);font-weight:600}
 
-  .bins{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid rgba(255,255,255,.14)}
-  .bin{padding:20px 12px 22px;border-right:1px solid rgba(255,255,255,.14)}
-  .bin:last-child{border-right:none}
-  .bin i{display:block;height:9px;width:100%;border-radius:3px;margin-bottom:13px}
-  .bin b{display:block;font-size:13px;line-height:1.3;margin-bottom:3px}
-  .bin small{font-size:11.5px;color:#9dbdb0;line-height:1.45;display:block}
-  .bin-fill-paper i{background:var(--bin-paper)}
-  .bin-fill-metal i{background:var(--bin-metal)}
-  .bin-fill-bottle i{background:var(--bin-bottle)}
-  .bin-fill-plastic i{background:var(--bin-plastic)}
-  .bin-fill-general i{background:var(--bin-general)}
+  /* Start-here guide */
+  .guide{background:var(--accent-soft);border:1px solid #d8e5dd;border-radius:var(--radius);
+         padding:22px 26px;margin:38px 0 0}
+  .guide h2{font-size:1.05rem;margin:0 0 10px}
+  .guide ol{margin:0;padding-left:22px;font-size:15px}
+  .guide li{margin-bottom:6px}
+  .guide a{font-weight:600}
 
-  main section{padding:58px 0;border-bottom:1px solid var(--line)}
-  .eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
-  .eyebrow em{font-family:var(--display);font-size:13px;font-style:normal;font-weight:700;
-    color:var(--coral);letter-spacing:.06em}
-  h2{font-family:var(--display);font-weight:600;font-size:clamp(1.7rem,3.6vw,2.3rem);
-    line-height:1.15;letter-spacing:-.02em;margin:0 0 10px}
-  .sub{color:var(--muted);font-size:15.5px;max-width:66ch;margin:0 0 30px}
-  h3{font-family:var(--display);font-size:1.15rem;font-weight:600;margin:30px 0 12px}
-  p{margin:0 0 15px}
+  /* Sections */
+  main section{padding:54px 0;border-bottom:1px solid var(--line)}
+  main section:last-child{border-bottom:none}
+  .lead{color:var(--muted);font-size:15.5px;max-width:68ch;margin:0 0 24px}
+  .callout{border-left:3px solid var(--accent);padding-left:16px;color:var(--muted);font-size:15px}
+  .callout b{color:var(--ink)}
+  .flow li b{font-weight:700;color:var(--ink)}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px}
-  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;
-    box-shadow:0 3px 18px rgba(22,37,31,.035)}
-  .box .kicker{font-size:10.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-    color:var(--forest-2);margin-bottom:9px}
-  .box h4{font-family:var(--display);font-size:1.08rem;font-weight:600;margin:0 0 7px;line-height:1.3}
-  .box p{font-size:14.5px;color:var(--muted);margin:0}
+  /* Facts, code, tables */
+  .facts{display:grid;grid-template-columns:190px 1fr;gap:0;margin:0 0 8px;border-top:1px solid var(--line)}
+  .facts dt,.facts dd{padding:14px 0;margin:0;border-bottom:1px solid var(--line)}
+  .facts dt{font-weight:700}
+  .facts dd{color:var(--muted)}
+  pre{background:#f3f5f3;border:1px solid var(--line);border-radius:var(--radius);
+      padding:18px 20px;overflow:auto;font-size:13.5px;line-height:1.75;margin:0 0 20px}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{border-bottom:2px solid var(--ink);color:var(--muted);font-size:12.5px;font-weight:700;
+           letter-spacing:.04em;text-transform:uppercase}
+  tbody tr:nth-child(even){background:var(--surface)}
+  .summary{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+           border-radius:var(--radius);padding:14px 18px;font-size:15px;margin-bottom:24px}
+  .summary b{font-weight:700}
 
-  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
-  .step{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--bin-bottle);
-    border-radius:12px;padding:18px}
-  .step:nth-child(1){border-top-color:var(--bin-paper)}
-  .step:nth-child(2){border-top-color:var(--bin-bottle)}
-  .step:nth-child(3){border-top-color:var(--bin-plastic)}
-  .step:nth-child(4){border-top-color:var(--bin-general)}
-  .step .k{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  .step strong{display:block;font-family:var(--display);font-size:1.05rem;font-weight:600;margin:6px 0}
-  .step small{color:var(--muted);font-size:13px;line-height:1.5;display:block}
-  .branch{background:var(--mint);border:1px solid #b9d8c8;border-radius:var(--radius);
-    padding:18px 22px;font-size:14.5px}
-  .branch b{color:var(--forest)}
-  .note{font-size:13.5px;color:var(--muted);border-left:3px solid var(--bin-bottle);
-    padding-left:16px;margin-top:18px}
-  code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#eae7dc;
-    border-radius:5px;padding:2px 6px;font-size:12.5px;color:var(--forest)}
-
-  .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:99px;
-    background:var(--mint);color:var(--forest);margin:0 6px 7px 0}
-  .pill.blue{background:#e2ecf8;color:#2c588c}
-  .pill.coral{background:#f6e2dc;color:#a13e28}
-
-  pre{background:var(--forest);color:#dfeae4;border-radius:var(--radius);padding:22px 24px;
-    overflow:auto;font-size:13px;line-height:1.6;margin:0}
-  pre code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px;border-bottom:4px solid var(--forest-2)}
-  .stat:nth-child(2){border-bottom-color:var(--bin-paper)}
-  .stat:nth-child(3){border-bottom-color:var(--bin-bottle)}
-  .stat:nth-child(4){border-bottom-color:var(--bin-plastic)}
-  .stat b{font-family:var(--display);font-size:2rem;font-weight:600;line-height:1;display:block;margin-bottom:8px}
-  .stat span{font-size:12.5px;color:var(--muted)}
-
-  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);
-    border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{background:#edeadd;font-weight:700;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-  tbody tr:nth-child(even){background:#fbfaf5}
-  tr:last-child td{border-bottom:none}
-
-  footer{background:var(--forest);color:#a9c4b7;padding:34px 0;font-size:13px}
-  footer a{color:#e9c76a}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:28px 0}
 
   @media(max-width:640px){
-    .hero-in{padding-top:46px}
-    .cta{padding-bottom:40px}
-    .bins{grid-template-columns:repeat(2,1fr)}
-    .bin{border-bottom:1px solid rgba(255,255,255,.14)}
-    .bin:nth-child(2n){border-right:none}
-    .bin:last-child{grid-column:1/-1;border-bottom:none}
-    nav{width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
     .wrap{padding:0 18px}
+    .head-in{min-height:auto;padding:12px 0}
+    nav{width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+    nav a{white-space:nowrap}
+    .hero{padding:46px 0 38px}
+    main section{padding:40px 0}
+    .facts{grid-template-columns:1fr}
+    .facts dt{border-bottom:none;padding-bottom:0}
+    .facts dd{padding-top:4px}
+    .guide{padding:18px 20px}
+    th,td{padding:10px 8px;font-size:13.5px}
   }
-  @media(prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .btn:hover{transform:none}
-    *{transition:none !important}
-  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap head-in">
-    <div class="brand">Campus Recycling Helper <span>AILT9019 · Group 38 · HKU</span></div>
+    <a class="brand" href="#top">Campus Recycling Helper<small>AILT9019 · Group 38 · HKU</small></a>
     <nav aria-label="Sections">
       <a href="#problem">Problem</a>
       <a href="#how">How it works</a>
-      <a href="#built">What we built</a>
       <a href="#run">Try it</a>
       <a href="#evidence">Evidence</a>
       <a href="#limits">Limits</a>
@@ -170,76 +125,81 @@
   </div>
 </header>
 
-<div class="hero">
-  <div class="wrap hero-in">
-    <span class="tag">Brand-aware sorting · HKU campus</span>
-    <h1>Which bin does this packaging go in?</h1>
-    <p class="lede">HKU students and staff face a fixed set of recycling bins but packaging that is rarely obvious — a milk carton, a coffee cup, a noodle pot. This assistant names the packaging from a product or brand, matches it to a published HKU rule, and answers with the exact bin plus the official source. If it genuinely cannot tell, it asks — then commits to a labelled best guess rather than shrugging.</p>
-    <div class="cta">
-      <a class="btn btn-gold" href="#run">See a real result</a>
-      <a class="btn btn-ghost" href="https://github.com/Richard-ZJC/AILT9019-gp38">View the code</a>
-      <a class="btn btn-ghost" href="#how">How it works</a>
-    </div>
-  </div>
+<div class="hero" id="top">
   <div class="wrap">
-    <div class="bins" aria-label="The bins actually deployed on campus">
-      <div class="bin bin-fill-paper"><i></i><b>Paper</b><small>Blue bin</small></div>
-      <div class="bin bin-fill-metal"><i></i><b>Metal</b><small>Silver bin</small></div>
-      <div class="bin bin-fill-bottle"><i></i><b>Plastic bottle</b><small>Yellow bin</small></div>
-      <div class="bin bin-fill-plastic"><i></i><b>Other plastic</b><small>Green bin</small></div>
-      <div class="bin bin-fill-general"><i></i><b>General waste</b><small>Grey bin</small></div>
+    <h1>Which bin does this packaging go in?</h1>
+    <p class="lede">HKU students and staff face a fixed set of recycling bins, but packaging that is rarely obvious — a milk carton, a coffee cup, a noodle pot. This assistant names the packaging from a product or brand, matches it to a published HKU rule, and answers with the exact bin plus the official source. If it genuinely cannot tell, it asks — then commits to a labelled best guess rather than shrugging.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#run">See a real result</a>
+      <a class="btn btn-secondary" href="#how">How it works</a>
     </div>
+    <ul class="bins" aria-label="Bins actually deployed on campus">
+      <li><b>Paper</b> (blue)</li>
+      <li><b>Metal</b> (silver)</li>
+      <li><b>Plastic bottle</b> (yellow)</li>
+      <li><b>Other plastic</b> (green)</li>
+      <li><b>General waste</b> (grey)</li>
+    </ul>
   </div>
 </div>
 
 <main class="wrap">
+
+  <div class="guide" aria-label="Reading guide">
+    <h2>Start here</h2>
+    <ol>
+      <li><a href="#problem">Problem and scope</a> — who it is for, and where it stops.</li>
+      <li><a href="#how">How it works</a> — the four steps and the clarifying branch.</li>
+      <li><a href="#run">Try it</a> — a real result from the live service, then run it yourself.</li>
+      <li><a href="#evidence">Evidence and limits</a> — test results, failure cases and what is not covered.</li>
+    </ol>
+  </div>
+
   <section id="problem">
-    <div class="eyebrow"><em>01</em></div>
     <h2>Who it is for, and what it is not</h2>
-    <p class="sub">The problem, the users and the boundary of the system.</p>
-    <div class="grid">
-      <div class="box"><div class="kicker">Users</div><h4>Anyone sorting on campus</h4><p>Students and staff who know the item but not which of the small set of campus bins or the re Kiosk takes it.</p></div>
-      <div class="box"><div class="kicker">Problem</div><h4>Rules exist, but are hard to apply</h4><p>HKU publishes DO / DON'T guides and photos. Turning "this carton" into the right bin still needs domain knowledge.</p></div>
-      <div class="box"><div class="kicker">Not for</div><h4>No guessing with hazmat</h4><p>Chemicals, e-waste, medical waste and pressurised cans are refused, not sorted. It does not decide waste policy.</p></div>
-    </div>
-    <p class="note"><b>Scope change from proposal:</b> the daily Smart Recycling Bin stations on campus carry four recycling bins (Paper, Metal, Plastic Bottle, Other Plastic) plus a general-waste bin. Tetra Pak, glass and rechargeable batteries are therefore guided to the re Kiosk, not to a bin that is not there. This replaced an earlier six-way re Kiosk framing.</p>
+    <p class="lead">The problem, the users and the boundary of the system.</p>
+    <ul>
+      <li><b>Users.</b> Anyone sorting on campus who knows the item but not which of the small set of campus bins — or the re Kiosk — takes it.</li>
+      <li><b>Problem.</b> HKU publishes DO / DON'T guides and photos, but turning "this carton" into the right bin still needs domain knowledge.</li>
+      <li><b>Not for.</b> Chemicals, e-waste, medical waste and pressurised cans are refused, not sorted. The app does not decide waste policy.</li>
+    </ul>
+    <p class="callout"><b>Scope change from the proposal:</b> the daily Smart Recycling Bin stations carry four recycling bins (Paper, Metal, Plastic Bottle, Other Plastic) plus a general-waste bin. Tetra Pak, glass and rechargeable batteries are therefore guided to the re Kiosk, not to a bin that is not there. This replaced an earlier six-way re Kiosk framing.</p>
   </section>
 
   <section id="how">
-    <div class="eyebrow"><em>02</em></div>
     <h2>How it works</h2>
-    <p class="sub">Input → processing → output, with a clarifying branch when the packaging is ambiguous.</p>
-    <div class="flow">
-      <div class="step"><div class="k">Input</div><strong>Product or brand</strong><small>e.g. "Vitasoy lemon tea"</small></div>
-      <div class="step"><div class="k">Processing</div><strong>Identify components</strong><small>Keyword layer or AI identifies the packaging parts</small></div>
-      <div class="step"><div class="k">Processing</div><strong>Match a rule</strong><small>A deterministic matcher copies a category from published rules</small></div>
-      <div class="step"><div class="k">Output</div><strong>Bin + source</strong><small>Exact bin, instruction and official URL</small></div>
-    </div>
-    <div class="branch"><b>The clarify branch:</b> when the packaging is ambiguous, the app asks one question with fixed options. You answer; it may ask up to two rounds. On the third round it commits to a <code class="inline">best_guess</code> — labelled and confidence-capped — instead of refusing. Hazard items and out-of-scope requests bypass this and are refused outright.</div>
-    <p class="note"><b>Key design rule:</b> the AI identifies; it never decides a category. Categories exist only in <code class="inline">data/rules.json</code>, and the matcher is the only component that emits one. If no rule matches, the answer is a refusal — a category is never invented.</p>
+    <p class="lead">Input → processing → output, with a clarifying branch when the packaging is ambiguous.</p>
+    <ol class="flow">
+      <li><b>Input.</b> A product or brand, e.g. "Vitasoy lemon tea".</li>
+      <li><b>Identify.</b> The keyword layer — or the AI — names the packaging components.</li>
+      <li><b>Match.</b> A deterministic matcher copies a category from <code class="inline">data/rules.json</code>.</li>
+      <li><b>Answer.</b> Exact bin, instruction and official source URL.</li>
+    </ol>
+    <p class="callout"><b>The clarify branch.</b> When the packaging is ambiguous, the app asks one question with fixed options. You answer; it may ask up to two rounds. On the third round it commits to a <code class="inline">best_guess</code> — labelled and confidence-capped — instead of refusing. Hazard items and out-of-scope requests bypass this and are refused outright.</p>
+    <p class="callout"><b>Key design rule.</b> The AI identifies; it never decides a category. Categories exist only in <code class="inline">data/rules.json</code>, and the matcher is the only component that emits one. If no rule matches, the answer is a refusal — a category is never invented.</p>
   </section>
 
   <section id="built">
-    <div class="eyebrow"><em>03</em></div>
     <h2>What we built vs what the model provides</h2>
-    <p class="sub">Domain customisation is the rules, the matcher and the safety layer — not the language model.</p>
-    <div class="grid">
-      <div class="box"><div class="kicker">Team-built</div><p><span class="pill">16 rules</span><span class="pill">deterministic matcher</span><span class="pill">clarify state machine</span><span class="pill">hazard net</span><span class="pill">dual-channel failover</span><span class="pill">single-file web UI</span></p></div>
-      <div class="box"><div class="kicker">Model / API</div><p><span class="pill blue">packaging identification</span><span class="pill blue">JSON extraction</span><span class="pill blue">optional product search</span></p><p style="margin-top:8px">Provider: the course's Alibaba Bailian OpenAI-compatible gateway, model <code class="inline">qwen3.8-flash</code>.</p></div>
-      <div class="box"><div class="kicker">Domain customisation</div><p>Rules transcribed from HKU's official Recycling 101 poster and photo guide, with the <b>bin actually deployed on campus</b> attached to each item. Every answer carries the rule id, the official source URL and the date the rule was verified.</p></div>
-    </div>
+    <p class="lead">Domain customisation is the rules, the matcher and the safety layer — not the language model.</p>
+    <dl class="facts">
+      <dt>Team-built</dt>
+      <dd>16 rules, deterministic matcher, clarify state machine, hazard net, dual-channel failover, single-file web UI.</dd>
+      <dt>Model / API</dt>
+      <dd>Packaging identification, JSON extraction, optional product search. Provider: the course's Alibaba Bailian OpenAI-compatible gateway, model <code class="inline">qwen3.8-flash</code>.</dd>
+      <dt>Domain customisation</dt>
+      <dd>Rules transcribed from HKU's official Recycling 101 poster and photo guide, with the bin actually deployed on campus attached to each item. Every answer carries the rule id, the official source URL and the date the rule was verified.</dd>
+    </dl>
   </section>
 
   <section id="run">
-    <div class="eyebrow"><em>04</em></div>
     <h2>Try it locally</h2>
-    <p class="sub">Standard library only — no build step, no third-party packages. The keyword path works without a key.</p>
+    <p class="lead">Standard library only — no build step, no third-party packages. The keyword path works without a key.</p>
     <pre><code>git clone https://github.com/Richard-ZJC/AILT9019-gp38
 cd AILT9019-gp38
 python server.py --mock      # offline demo, no key needed
 # open http://localhost:8000</code></pre>
-    <p class="note">For the live AI path, copy <code class="inline">config.example.json</code> to <code class="inline">config.json</code> and add the group key; <code class="inline">config.json</code> is gitignored. Full setup, API-key options and test commands are in the repository README. On macOS, double-clicking <code class="inline">start.command</code> starts the server and opens the browser.</p>
-
+    <p>For the live AI path, copy <code class="inline">config.example.json</code> to <code class="inline">config.json</code> and add the group key; <code class="inline">config.json</code> is gitignored. Full setup, API-key options and test commands are in the repository README. On macOS, double-clicking <code class="inline">start.command</code> starts the server and opens the browser.</p>
     <h3>A genuine run (captured 18 Nov 2026)</h3>
     <p>Query <code class="inline">Vitasoy lemon tea</code> returned, from the live service:</p>
     <table>
@@ -256,15 +216,9 @@ python server.py --mock      # offline demo, no key needed
   </section>
 
   <section id="evidence">
-    <div class="eyebrow"><em>05</em></div>
     <h2>Evidence and failure cases</h2>
-    <p class="sub">Numbers below are from a fresh run on 18 Nov 2026; harnesses are in the repository's <code class="inline">tests/</code> folder.</p>
-    <div class="stats">
-      <div class="stat"><b>26/27</b><span>case suite + 2/2 checks</span></div>
-      <div class="stat"><b>27/27</b><span>AI-plugin / routing checks</span></div>
-      <div class="stat"><b>30/30</b><span>failure · edge · refusal</span></div>
-      <div class="stat"><b>9/9</b><span>server smoke checks</span></div>
-    </div>
+    <p class="lead">Numbers below are from a fresh run on 18 Nov 2026; harnesses are in the repository's <code class="inline">tests/</code> folder.</p>
+    <p class="summary"><b>Test results.</b> Case suite 26/27 · AI-plugin and routing 27/27 · failure, edge and refusal 30/30 · server smoke 9/9. The single non-passing case is a natural-language question the offline mock cannot parse; the real model returns a refusal for it.</p>
     <table>
       <thead><tr><th>Case type</th><th>Input</th><th>Observed behaviour</th></tr></thead>
       <tbody>
@@ -275,33 +229,31 @@ python server.py --mock      # offline demo, no key needed
       <tr><td>Known false positive</td><td><code class="inline">chemical-free cotton tote</code></td><td>Conservatively refused because the hazard regex matches "chemical" — deliberately fails on the safe side.</td></tr>
       </tbody>
     </table>
-    <p class="note">The single non-passing case in the 26/27 suite is a natural-language question that the offline mock cannot parse; the real model returns a refusal for it.</p>
   </section>
 
   <section id="limits">
-    <div class="eyebrow"><em>06</em></div>
     <h2>Limitations</h2>
-    <p class="sub">Stated against the evidence above.</p>
-    <div class="grid">
-      <div class="box"><div class="kicker">Scope</div><h4>Fixed rule set</h4><p>Only the 16 published rules are covered. Anything outside them is refused rather than guessed. Covered items must be clean and correctly described.</p></div>
-      <div class="box"><div class="kicker">Modality</div><h4>Text-first</h4><p>Image upload, fuzzy matching and streaming responses are reserved interfaces, not shipped features. Input is normalised for English; Chinese queries are not guaranteed.</p></div>
-      <div class="box"><div class="kicker">Location</div><h4>Location nuance</h4><p>The official site lists a Glass Bottle slot at two Smart Recycling Bin locations. The app defaults to the re Kiosk, which accepts glass campus-wide — simpler, but not location-aware.</p></div>
-      <div class="box"><div class="kicker">Dependency</div><h4>Model dependence</h4><p>The AI path needs the course key and network. Without it the keyword path still answers covered items; everything else degrades visibly rather than guessing.</p></div>
-    </div>
+    <p class="lead">Stated against the evidence above.</p>
+    <ul>
+      <li><b>Scope — fixed rule set.</b> Only the 16 published rules are covered. Anything outside them is refused rather than guessed. Covered items must be clean and correctly described.</li>
+      <li><b>Modality — text-first.</b> Image upload, fuzzy matching and streaming responses are reserved interfaces, not shipped features. Input is normalised for English; Chinese queries are not guaranteed.</li>
+      <li><b>Location nuance.</b> The official site lists a Glass Bottle slot at two Smart Recycling Bin locations. The app defaults to the re Kiosk, which accepts glass campus-wide — simpler, but not location-aware.</li>
+      <li><b>Model dependence.</b> The AI path needs the course key and network. Without it the keyword path still answers covered items; everything else degrades visibly rather than guessing.</li>
+    </ul>
   </section>
 
   <section id="sources">
-    <div class="eyebrow"><em>07</em></div>
     <h2>Sources</h2>
-    <p class="sub">Rules come from HKU's official waste-reduction site. These are the authority for every category shown.</p>
+    <p class="lead">Rules come from HKU's official waste-reduction site. These are the authority for every category shown.</p>
     <ul>
       <li><a href="https://www.wastereduction.hku.hk/recycling-101">HKU Recycling 101</a></li>
       <li><a href="https://www.wastereduction.hku.hk/_files/ugd/bccd45_652bab3854994da9a05b96ed09580df4.pdf">Recycling 101 poster (PDF)</a></li>
       <li><a href="https://wastereduction.hku.hk/photo-guide">Recycling 101 Photo Guide</a></li>
       <li><a href="https://www.wastereduction.hku.hk/re-facilities">HKU re Facilities — which bins exist</a></li>
     </ul>
-    <p class="note">Repository: <a href="https://github.com/Richard-ZJC/AILT9019-gp38">github.com/Richard-ZJC/AILT9019-gp38</a> (access for teaching staff on request).</p>
+    <p>Repository: <a href="https://github.com/Richard-ZJC/AILT9019-gp38">github.com/Richard-ZJC/AILT9019-gp38</a> (access for teaching staff on request).</p>
   </section>
+
 </main>
 
 <footer>
