@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ---------- Base: phone first ---------- */
   :root{
     --bg:#faf9f7; --surface:#ffffff; --ink:#1b2420; --muted:#59655f;
     --line:#e3e5e1; --accent:#175743; --accent-dark:#0f4132; --accent-soft:#eff4f1;
@@ -17,96 +18,143 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16.5px;line-height:1.72}
-  .wrap{max-width:900px;margin:0 auto;padding:0 24px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.68}
+  .wrap{max-width:960px;margin:0 auto;padding:0 18px}
   a{color:var(--accent);text-underline-offset:3px}
   a:hover{color:var(--accent-dark)}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-  section{scroll-margin-top:80px}
+  section{scroll-margin-top:112px}   /* two-line header on phones */
   h1,h2,h3{font-weight:700;letter-spacing:-.02em;line-height:1.25}
-  h1{font-size:clamp(2.1rem,5vw,3.1rem);line-height:1.18;margin:0 0 18px;max-width:19ch}
-  h2{font-size:clamp(1.5rem,3vw,2rem);margin:0 0 8px}
-  h3{font-size:1.1rem;margin:26px 0 8px}
+  h1{font-size:clamp(1.95rem,8vw,3.1rem);line-height:1.18;margin:0 0 18px;max-width:19ch}
+  h2{font-size:clamp(1.4rem,5vw,2rem);margin:0 0 8px}
+  h3{font-size:1.05rem;margin:24px 0 8px}
   p{margin:0 0 14px}
   ul,ol{padding-left:22px;margin:0 0 14px}
   li{margin-bottom:7px}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  code.inline{background:#f0f2ef;border-radius:4px;padding:1px 5px;font-size:.88em}
+  code.inline{background:#f0f2ef;border-radius:4px;padding:1px 5px;font-size:.88em;overflow-wrap:anywhere}
 
-  /* Header */
+  /* Header — stacked on phones */
   header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-  .head-in{display:flex;align-items:center;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;min-height:66px}
+  .head-in{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:10px 0}
   .brand{color:var(--ink);text-decoration:none;font-size:16px;font-weight:700;line-height:1.3}
   .brand small{display:block;color:var(--muted);font-size:11.5px;font-weight:500;letter-spacing:.02em}
-  nav{display:flex;gap:4px;flex-wrap:wrap}
-  nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 9px;text-decoration:none;
-        color:var(--muted);font-size:13.5px;font-weight:600;border-bottom:2px solid transparent}
+  nav{display:flex;gap:2px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;
+      scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;white-space:nowrap;
+        text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:600;
+        border-bottom:2px solid transparent}
   nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 
   /* Hero */
-  .hero{background:var(--surface);border-bottom:1px solid var(--line);padding:70px 0 56px}
-  .lede{font-size:1.05rem;color:var(--muted);max-width:64ch;margin:0 0 28px}
-  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;
+  .hero{background:var(--surface);border-bottom:1px solid var(--line);padding:44px 0 36px}
+  .lede{font-size:1rem;color:var(--muted);max-width:64ch;margin:0 0 26px}
+  .actions{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+  .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;padding:0 20px;
        border:1px solid var(--accent);border-radius:var(--radius);font-size:14.5px;font-weight:600;
        text-decoration:none}
   .btn-primary{background:var(--accent);color:#fff}
   .btn-primary:hover{background:var(--accent-dark);color:#fff}
   .btn-secondary{background:var(--surface);color:var(--accent)}
   .btn-secondary:hover{background:var(--accent-soft);color:var(--accent-dark)}
-  .bins{border-top:1px solid var(--line);padding-top:22px;display:flex;flex-wrap:wrap;gap:6px 0;
-        list-style:none;margin:0;font-size:14px;color:var(--muted)}
+  .bins{border-top:1px solid var(--line);padding-top:20px;display:flex;flex-wrap:wrap;gap:8px 0;
+        list-style:none;margin:0;font-size:13.5px;color:var(--muted)}
   .bins li{display:flex;align-items:center;margin:0}
-  .bins li+li::before{content:"·";color:#b9c0bb;margin:0 12px}
+  .bins li+li::before{content:"·";color:#b9c0bb;margin:0 8px}
   .bins b{color:var(--ink);font-weight:600}
 
   /* Start-here guide */
   .guide{background:var(--accent-soft);border:1px solid #d8e5dd;border-radius:var(--radius);
-         padding:22px 26px;margin:38px 0 0}
+         padding:18px 20px;margin:28px 0 0}
   .guide h2{font-size:1.05rem;margin:0 0 10px}
-  .guide ol{margin:0;padding-left:22px;font-size:15px}
+  .guide ol{margin:0;padding-left:22px;font-size:14.5px}
   .guide li{margin-bottom:6px}
   .guide a{font-weight:600}
 
   /* Sections */
-  main section{padding:54px 0;border-bottom:1px solid var(--line)}
+  main section{padding:40px 0;border-bottom:1px solid var(--line)}
   main section:last-child{border-bottom:none}
-  .lead{color:var(--muted);font-size:15.5px;max-width:68ch;margin:0 0 24px}
-  .callout{border-left:3px solid var(--accent);padding-left:16px;color:var(--muted);font-size:15px}
+  .lead{color:var(--muted);font-size:15px;max-width:68ch;margin:0 0 22px}
+  .callout{border-left:3px solid var(--accent);padding-left:16px;color:var(--muted);font-size:14.5px}
   .callout b{color:var(--ink)}
   .flow li b{font-weight:700;color:var(--ink)}
 
-  /* Facts, code, tables */
-  .facts{display:grid;grid-template-columns:190px 1fr;gap:0;margin:0 0 8px;border-top:1px solid var(--line)}
-  .facts dt,.facts dd{padding:14px 0;margin:0;border-bottom:1px solid var(--line)}
-  .facts dt{font-weight:700}
-  .facts dd{color:var(--muted)}
+  /* Facts — stacked on phones */
+  .facts{display:grid;grid-template-columns:1fr;margin:0 0 8px;border-top:1px solid var(--line)}
+  .facts dt,.facts dd{padding:12px 0;margin:0}
+  .facts dt{font-weight:700;border-bottom:none;padding-bottom:0}
+  .facts dd{color:var(--muted);border-bottom:1px solid var(--line);padding-top:4px}
+
+  /* Code */
   pre{background:#f3f5f3;border:1px solid var(--line);border-radius:var(--radius);
-      padding:18px 20px;overflow:auto;font-size:13.5px;line-height:1.75;margin:0 0 20px}
-  table{width:100%;border-collapse:collapse;font-size:14.5px}
-  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  thead th{border-bottom:2px solid var(--ink);color:var(--muted);font-size:12.5px;font-weight:700;
-           letter-spacing:.04em;text-transform:uppercase}
-  tbody tr:nth-child(even){background:var(--surface)}
+      padding:14px 16px;overflow:auto;font-size:12.5px;line-height:1.75;margin:0 0 20px}
+
+  /* Tables — cards on phones */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead{display:none}
+  tbody tr{display:block;background:var(--surface);border:1px solid var(--line);
+           border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
+  tbody td{display:block;border:none;padding:5px 0;text-align:left;vertical-align:top;
+           overflow-wrap:anywhere}
+  tbody td:first-child{display:block;font-weight:700;color:var(--ink);
+                       border-bottom:1px solid var(--line);padding:0 0 7px;margin-bottom:5px}
+  tbody td[data-label]{display:block;position:relative;padding-left:94px}
+  tbody td[data-label]::before{content:attr(data-label);position:absolute;left:0;top:5px;width:82px;
+                               color:var(--muted);font-size:11.5px;font-weight:700;
+                               letter-spacing:.03em;text-transform:uppercase}
+
   .summary{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
-           border-radius:var(--radius);padding:14px 18px;font-size:15px;margin-bottom:24px}
+           border-radius:var(--radius);padding:13px 16px;font-size:14.5px;margin-bottom:22px}
   .summary b{font-weight:700}
 
-  footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:28px 0}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:24px 0}
 
-  @media(max-width:640px){
-    .wrap{padding:0 18px}
-    .head-in{min-height:auto;padding:12px 0}
-    nav{width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
-    nav a{white-space:nowrap}
-    .hero{padding:46px 0 38px}
-    main section{padding:40px 0}
-    .facts{grid-template-columns:1fr}
-    .facts dt{border-bottom:none;padding-bottom:0}
-    .facts dd{padding-top:4px}
-    .guide{padding:18px 20px}
-    th,td{padding:10px 8px;font-size:13.5px}
+  /* ---------- >= 600px: larger phones / small tablets ---------- */
+  @media(min-width:600px){
+    .wrap{padding:0 24px}
+    .hero{padding:56px 0 44px}
+    .actions{flex-direction:row}
+    .btn{width:auto}
+    .bins li+li::before{margin:0 12px}
+    main section{padding:48px 0}
   }
+
+  /* ---------- >= 820px: tablets and up ---------- */
+  @media(min-width:820px){
+    section{scroll-margin-top:80px}
+    .head-in{flex-direction:row;align-items:center;justify-content:space-between;min-height:66px;padding:0}
+    nav{overflow:visible;flex-wrap:wrap}
+    .hero{padding:70px 0 56px}
+    .lede{font-size:1.05rem}
+    .guide{padding:22px 26px;margin-top:38px}
+    .guide ol{font-size:15px}
+    main section{padding:54px 0}
+    .lead{font-size:15.5px}
+    .callout{font-size:15px}
+    .facts{grid-template-columns:190px 1fr}
+    .facts dt,.facts dd{padding:14px 0;border-bottom:1px solid var(--line)}
+    .facts dt{border-bottom:1px solid var(--line);padding-bottom:14px}
+    .facts dd{padding-top:14px}
+    pre{font-size:13.5px;padding:18px 20px}
+
+    /* restore real table layout */
+    table{font-size:14.5px}
+    thead{display:table-header-group}
+    tbody{display:table-row-group}
+    tbody tr{display:table-row;background:none;border:none;border-radius:0;padding:0;margin:0}
+    tbody tr:nth-child(even){background:var(--surface)}
+    tbody td,tbody td:first-child,tbody td[data-label]{display:table-cell;padding:11px 14px;
+      border-bottom:1px solid var(--line);font-weight:400;color:var(--ink)}
+    tbody td[data-label]::before{content:none}
+    th,td{text-align:left;vertical-align:top}
+    thead th{border-bottom:2px solid var(--ink);color:var(--muted);font-size:12.5px;font-weight:700;
+             letter-spacing:.04em;text-transform:uppercase;padding:11px 14px}
+
+    .summary{padding:14px 18px;font-size:15px}
+    footer{padding:28px 0}
+  }
+
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -222,11 +270,11 @@ python server.py --mock      # offline demo, no key needed
     <table>
       <thead><tr><th>Case type</th><th>Input</th><th>Observed behaviour</th></tr></thead>
       <tbody>
-      <tr><td>Boundary — hazard</td><td><code class="inline">pesticide</code></td><td><b>REFUSE</b> — deterministic hazard net, "local hazard keyword: pesticide". No category emitted.</td></tr>
-      <tr><td>Boundary — disguised can</td><td><code class="inline">aerosol can of deodorant</code></td><td><b>REFUSE</b> — hazard net wins over the metal-can rule.</td></tr>
-      <tr><td>Failure — both AI channels down</td><td>simulated provider outage</td><td><code class="inline">SERVICE_UNAVAILABLE</code> or <code class="inline">best_effort</code> with an actionable instruction — never an invented category.</td></tr>
-      <tr><td>Invalid input</td><td>blank text / malformed JSON</td><td>HTTP <code class="inline">400</code> with a clear message; unknown session <code class="inline">404</code>.</td></tr>
-      <tr><td>Known false positive</td><td><code class="inline">chemical-free cotton tote</code></td><td>Conservatively refused because the hazard regex matches "chemical" — deliberately fails on the safe side.</td></tr>
+      <tr><td>Boundary — hazard</td><td data-label="Input"><code class="inline">pesticide</code></td><td data-label="Observed"><b>REFUSE</b> — deterministic hazard net, "local hazard keyword: pesticide". No category emitted.</td></tr>
+      <tr><td>Boundary — disguised can</td><td data-label="Input"><code class="inline">aerosol can of deodorant</code></td><td data-label="Observed"><b>REFUSE</b> — hazard net wins over the metal-can rule.</td></tr>
+      <tr><td>Failure — both AI channels down</td><td data-label="Input">simulated provider outage</td><td data-label="Observed"><code class="inline">SERVICE_UNAVAILABLE</code> or <code class="inline">best_effort</code> with an actionable instruction — never an invented category.</td></tr>
+      <tr><td>Invalid input</td><td data-label="Input">blank text / malformed JSON</td><td data-label="Observed">HTTP <code class="inline">400</code> with a clear message; unknown session <code class="inline">404</code>.</td></tr>
+      <tr><td>Known false positive</td><td data-label="Input"><code class="inline">chemical-free cotton tote</code></td><td data-label="Observed">Conservatively refused because the hazard regex matches "chemical" — deliberately fails on the safe side.</td></tr>
       </tbody>
     </table>
   </section>
