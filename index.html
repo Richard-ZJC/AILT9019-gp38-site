@@ -9,98 +9,111 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ---------- Base: phone first ---------- */
+  /* ============ Tokens ============ */
   :root{
-    --bg:#faf9f7; --surface:#ffffff; --ink:#1b2420; --muted:#59655f;
-    --line:#e3e5e1; --accent:#175743; --accent-dark:#0f4132; --accent-soft:#eff4f1;
-    --radius:8px;
-    --font:"Noto Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --bg:#faf9f7; --surface:#ffffff; --ink:#151d19; --muted:#55605a;
+    --line:#e2e4e0; --accent:#155a45; --accent-dark:#0e4031; --accent-soft:#eef4f0;
+    --radius:6px;
+    --sans:"Noto Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.68}
-  .wrap{max-width:960px;margin:0 auto;padding:0 18px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+       font-size:1.0625rem;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
   a{color:var(--accent);text-underline-offset:3px}
   a:hover{color:var(--accent-dark)}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-  section{scroll-margin-top:112px}   /* two-line header on phones */
-  h1,h2,h3{font-weight:700;letter-spacing:-.02em;line-height:1.25}
-  h1{font-size:clamp(1.95rem,8vw,3.1rem);line-height:1.18;margin:0 0 18px;max-width:19ch}
-  h2{font-size:clamp(1.4rem,5vw,2rem);margin:0 0 8px}
-  h3{font-size:1.05rem;margin:24px 0 8px}
-  p{margin:0 0 14px}
-  ul,ol{padding-left:22px;margin:0 0 14px}
-  li{margin-bottom:7px}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  code.inline{background:#f0f2ef;border-radius:4px;padding:1px 5px;font-size:.88em;overflow-wrap:anywhere}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  section{scroll-margin-top:112px}
+  code{font-family:var(--mono);font-size:.86em}
+  code.inline{background:#eef0ec;border-radius:3px;padding:2px 5px;overflow-wrap:anywhere}
 
-  /* Header — stacked on phones */
+  /* ============ Editorial type scale ============ */
+  h1,h2,h3{font-weight:700;letter-spacing:-.035em;line-height:1.08;margin:0;color:var(--ink)}
+  h1{font-size:clamp(2.5rem,8vw,5rem);letter-spacing:-.045em;max-width:16ch;margin-bottom:24px}
+  h2{font-size:clamp(1.6rem,4.6vw,2.75rem);margin-bottom:10px}
+  h3{font-size:1.2rem;letter-spacing:-.02em;line-height:1.3;margin:34px 0 12px}
+  p{margin:0 0 16px}
+  ul,ol{padding-left:22px;margin:0 0 16px}
+  li{margin-bottom:8px}
+  .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px;
+           font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.15em;
+           text-transform:uppercase;color:var(--accent)}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+  .lede{font-size:clamp(1.05rem,2.2vw,1.22rem);line-height:1.65;color:var(--muted);
+        max-width:60ch;margin:0 0 34px}
+
+  /* ============ Header ============ */
   header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-  .head-in{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:10px 0}
-  .brand{color:var(--ink);text-decoration:none;font-size:16px;font-weight:700;line-height:1.3}
-  .brand small{display:block;color:var(--muted);font-size:11.5px;font-weight:500;letter-spacing:.02em}
-  nav{display:flex;gap:2px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;
-      scrollbar-width:none}
+  .head-in{display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:11px 0}
+  .brand{color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .brand small{display:block;color:var(--muted);font-family:var(--mono);font-size:10.5px;
+               font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+  nav{display:flex;gap:2px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   nav::-webkit-scrollbar{display:none}
   nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;white-space:nowrap;
-        text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:600;
+        text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:12px;font-weight:600;
         border-bottom:2px solid transparent}
   nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 
-  /* Hero */
-  .hero{background:var(--surface);border-bottom:1px solid var(--line);padding:44px 0 36px}
-  .lede{font-size:1rem;color:var(--muted);max-width:64ch;margin:0 0 26px}
-  .actions{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
-  .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;padding:0 20px;
-       border:1px solid var(--accent);border-radius:var(--radius);font-size:14.5px;font-weight:600;
-       text-decoration:none}
+  /* ============ Hero ============ */
+  .hero{background:var(--surface);border-bottom:1px solid var(--line);padding:52px 0 44px}
+  .hero .eyebrow{margin-bottom:26px}
+  .actions{display:flex;flex-direction:column;gap:10px;margin-bottom:34px}
+  .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;padding:0 24px;
+       border:1px solid var(--accent);border-radius:999px;font-size:14px;font-weight:600;
+       font-family:var(--mono);text-decoration:none;transition:background .15s,color .15s}
   .btn-primary{background:var(--accent);color:#fff}
   .btn-primary:hover{background:var(--accent-dark);color:#fff}
   .btn-secondary{background:var(--surface);color:var(--accent)}
   .btn-secondary:hover{background:var(--accent-soft);color:var(--accent-dark)}
   .bins{border-top:1px solid var(--line);padding-top:20px;display:flex;flex-wrap:wrap;gap:8px 0;
-        list-style:none;margin:0;font-size:13.5px;color:var(--muted)}
+        list-style:none;margin:0;font-family:var(--mono);font-size:12px;color:var(--muted)}
   .bins li{display:flex;align-items:center;margin:0}
-  .bins li+li::before{content:"·";color:#b9c0bb;margin:0 8px}
-  .bins b{color:var(--ink);font-weight:600}
+  .bins li+li::before{content:"·";color:#b9c0bb;margin:0 9px}
+  .bins b{color:var(--ink);font-weight:700}
 
-  /* Start-here guide */
-  .guide{background:var(--accent-soft);border:1px solid #d8e5dd;border-radius:var(--radius);
-         padding:18px 20px;margin:28px 0 0}
-  .guide h2{font-size:1.05rem;margin:0 0 10px}
-  .guide ol{margin:0;padding-left:22px;font-size:14.5px}
-  .guide li{margin-bottom:6px}
-  .guide a{font-weight:600}
+  /* ============ Reading guide = typographic, not a card ============ */
+  .guide{padding:26px 0 4px;margin-bottom:8px}
+  .guide .eyebrow{margin-bottom:14px}
+  .guide ol{list-style:none;counter-reset:step;padding:0;margin:0}
+  .guide li{counter-increment:step;position:relative;padding:9px 0 9px 38px;
+            border-bottom:1px solid var(--line);font-size:15px;margin:0}
+  .guide li::before{content:"0" counter(step);position:absolute;left:0;top:10px;
+                    font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent)}
+  .guide a{font-weight:700}
 
-  /* Sections */
-  main section{padding:40px 0;border-bottom:1px solid var(--line)}
+  /* ============ Sections ============ */
+  main section{padding:56px 0;border-bottom:1px solid var(--line)}
   main section:last-child{border-bottom:none}
-  .lead{color:var(--muted);font-size:15px;max-width:68ch;margin:0 0 22px}
+  .lead{color:var(--muted);font-size:1rem;max-width:66ch;margin:0 0 26px}
+
   /* Collapsible explanations — native <details>, no JS */
   .fold{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);
         background:var(--surface);margin:0 0 12px}
-  .fold summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:9px 14px;
+  .fold summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:9px 15px;
                 cursor:pointer;list-style:none;font-weight:600;font-size:14.5px;color:var(--ink)}
   .fold summary::-webkit-details-marker{display:none}
-  .fold summary::before{content:"▸";color:var(--accent);font-size:13px;line-height:1;
-                        transition:transform .15s ease}
-  .fold[open] summary::before{transform:rotate(90deg)}
+  .fold summary::before{content:"+";color:var(--accent);font-family:var(--mono);font-size:15px;
+                        line-height:1;transition:transform .15s ease}
+  .fold[open] summary::before{transform:rotate(45deg)}
   .fold summary:hover{background:var(--accent-soft)}
-  .fold .fold-body{padding:0 14px 12px 32px;color:var(--muted);font-size:14.5px}
+  .fold .fold-body{padding:0 15px 14px 32px;color:var(--muted);font-size:14.5px}
   .fold .fold-body p{margin:0}
-  .flow li b{font-weight:700;color:var(--ink)}
 
-  /* Facts — stacked on phones */
+  /* Definition list — editorial rows */
   .facts{display:grid;grid-template-columns:1fr;margin:0 0 8px;border-top:1px solid var(--line)}
-  .facts dt,.facts dd{padding:12px 0;margin:0}
+  .facts dt,.facts dd{padding:13px 0;margin:0}
   .facts dt{font-weight:700;border-bottom:none;padding-bottom:0}
-  .facts dd{color:var(--muted);border-bottom:1px solid var(--line);padding-top:4px}
+  .facts dt::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);
+                    border-radius:50%;margin-right:10px;vertical-align:middle}
+  .facts dd{color:var(--muted);border-bottom:1px solid var(--line);padding-top:5px}
 
-  /* Code */
-  pre{background:#f3f5f3;border:1px solid var(--line);border-radius:var(--radius);
-      padding:14px 16px;overflow:auto;font-size:12.5px;line-height:1.75;margin:0 0 20px}
+  pre{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+      padding:16px 18px;overflow:auto;font-size:13px;line-height:1.75;margin:0 0 18px}
 
-  /* Tables — cards on phones */
+  /* Tables */
   table{width:100%;border-collapse:collapse;font-size:14px}
   thead{display:none}
   tbody tr{display:block;background:var(--surface);border:1px solid var(--line);
@@ -111,61 +124,59 @@
                        border-bottom:1px solid var(--line);padding:0 0 7px;margin-bottom:5px}
   tbody td[data-label]{display:block;position:relative;padding-left:94px}
   tbody td[data-label]::before{content:attr(data-label);position:absolute;left:0;top:5px;width:82px;
-                               color:var(--muted);font-size:11.5px;font-weight:700;
-                               letter-spacing:.03em;text-transform:uppercase}
+                               color:var(--muted);font-family:var(--mono);font-size:10.5px;
+                               font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .summary{color:var(--muted);font-size:14.5px;border-left:3px solid var(--accent);
+           padding-left:16px;margin-bottom:24px}
+  .summary b{color:var(--ink)}
 
-  .summary{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
-           border-radius:var(--radius);padding:13px 16px;font-size:14.5px;margin-bottom:22px}
-  .summary b{font-weight:700}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;
+         font-family:var(--mono);padding:26px 0}
 
-  footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:24px 0}
-
-  /* ---------- >= 600px: larger phones / small tablets ---------- */
+  /* ============ >= 600px ============ */
   @media(min-width:600px){
-    .wrap{padding:0 24px}
-    .hero{padding:56px 0 44px}
+    .wrap{padding:0 28px}
+    .hero{padding:66px 0 52px}
     .actions{flex-direction:row}
     .btn{width:auto}
     .bins li+li::before{margin:0 12px}
-    main section{padding:48px 0}
+    main section{padding:64px 0}
   }
 
-  /* ---------- >= 820px: tablets and up ---------- */
+  /* ============ >= 820px: editorial two-column head ============ */
   @media(min-width:820px){
     section{scroll-margin-top:80px}
     .head-in{flex-direction:row;align-items:center;justify-content:space-between;min-height:66px;padding:0}
     nav{overflow:visible;flex-wrap:wrap}
-    .hero{padding:70px 0 56px}
-    .lede{font-size:1.05rem}
-    .guide{padding:22px 26px;margin-top:38px}
-    .guide ol{font-size:15px}
-    main section{padding:54px 0}
-    .lead{font-size:15.5px}
-    .callout{font-size:15px}
-    .facts{grid-template-columns:190px 1fr}
-    .facts dt,.facts dd{padding:14px 0;border-bottom:1px solid var(--line)}
-    .facts dt{border-bottom:1px solid var(--line);padding-bottom:14px}
-    .facts dd{padding-top:14px}
+    .hero{padding:96px 0 72px}
+    .guide{padding-top:34px}
+    .guide ol{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
+    .guide li{border-bottom:1px solid var(--line)}
+    main section{padding:88px 0}
+    .lead{font-size:1.06rem}
+    .facts{grid-template-columns:200px 1fr}
+    .facts dt,.facts dd{padding:16px 0;border-bottom:1px solid var(--line)}
+    .facts dt{padding-bottom:16px}
+    .facts dd{padding-top:16px}
     pre{font-size:13.5px;padding:18px 20px}
 
-    /* restore real table layout */
     table{font-size:14.5px}
     thead{display:table-header-group}
     tbody{display:table-row-group}
     tbody tr{display:table-row;background:none;border:none;border-radius:0;padding:0;margin:0}
     tbody tr:nth-child(even){background:var(--surface)}
-    tbody td,tbody td:first-child,tbody td[data-label]{display:table-cell;padding:11px 14px;
+    tbody td,tbody td:first-child,tbody td[data-label]{display:table-cell;padding:12px 14px;
       border-bottom:1px solid var(--line);font-weight:400;color:var(--ink)}
+    tbody td[data-label]{padding-left:14px}
     tbody td[data-label]::before{content:none}
     th,td{text-align:left;vertical-align:top}
-    thead th{border-bottom:2px solid var(--ink);color:var(--muted);font-size:12.5px;font-weight:700;
-             letter-spacing:.04em;text-transform:uppercase;padding:11px 14px}
-
-    .summary{padding:14px 18px;font-size:15px}
-    footer{padding:28px 0}
+    thead th{border-bottom:2px solid var(--ink);color:var(--muted);font-family:var(--mono);
+             font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px}
+    .summary{font-size:15px}
+    footer{padding:32px 0}
   }
 
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -185,6 +196,7 @@
 
 <div class="hero" id="top">
   <div class="wrap">
+    <div class="eyebrow">Brand-aware sorting · HKU campus</div>
     <h1>Which bin does this packaging go in?</h1>
     <p class="lede">HKU students and staff face a fixed set of recycling bins, but packaging that is rarely obvious — a milk carton, a coffee cup, a noodle pot. This assistant names the packaging from a product or brand, matches it to a published HKU rule, and answers with the exact bin plus the official source. If it genuinely cannot tell, it asks — then commits to a labelled best guess rather than shrugging.</p>
     <div class="actions">
@@ -204,7 +216,7 @@
 <main class="wrap">
 
   <div class="guide" aria-label="Reading guide">
-    <h2>Start here</h2>
+    <div class="eyebrow">Start here</div>
     <ol>
       <li><a href="#problem">Problem and scope</a> — who it is for, and where it stops.</li>
       <li><a href="#how">How it works</a> — the four steps and the clarifying branch.</li>
@@ -214,6 +226,7 @@
   </div>
 
   <section id="problem">
+    <div class="eyebrow">01 — Problem</div>
     <h2>Who it is for, and what it is not</h2>
     <p class="lead">The problem, the users and the boundary of the system.</p>
     <ul>
@@ -228,9 +241,10 @@
   </section>
 
   <section id="how">
-    <h2>How it works</h2>
-    <p class="lead">Input → processing → output, with a clarifying branch when the packaging is ambiguous.</p>
-    <ol class="flow">
+    <div class="eyebrow">02 — How it works</div>
+    <h2>Input, processing, output</h2>
+    <p class="lead">Four steps, with a clarifying branch when the packaging is ambiguous.</p>
+    <ol>
       <li><b>Input.</b> A product or brand, e.g. "Vitasoy lemon tea".</li>
       <li><b>Identify.</b> The keyword layer — or the AI — names the packaging components.</li>
       <li><b>Match.</b> A deterministic matcher copies a category from <code class="inline">data/rules.json</code>.</li>
@@ -247,6 +261,7 @@
   </section>
 
   <section id="built">
+    <div class="eyebrow">03 — Built vs model</div>
     <h2>What we built vs what the model provides</h2>
     <p class="lead">Domain customisation is the rules, the matcher and the safety layer — not the language model.</p>
     <dl class="facts">
@@ -260,7 +275,8 @@
   </section>
 
   <section id="run">
-    <h2>Try it locally</h2>
+    <div class="eyebrow">04 — Try it</div>
+    <h2>Run it locally</h2>
     <p class="lead">Standard library only — no build step, no third-party packages. The keyword path works without a key.</p>
     <pre><code>git clone https://github.com/Richard-ZJC/AILT9019-gp38
 cd AILT9019-gp38
@@ -286,6 +302,7 @@ python server.py --mock      # offline demo, no key needed
   </section>
 
   <section id="evidence">
+    <div class="eyebrow">05 — Evidence</div>
     <h2>Evidence and failure cases</h2>
     <p class="lead">Numbers below are from a fresh run on 18 Nov 2026; harnesses are in the repository's <code class="inline">tests/</code> folder.</p>
     <p class="summary"><b>Test results.</b> Case suite 26/27 · AI-plugin and routing 27/27 · failure, edge and refusal 30/30 · server smoke 9/9. The single non-passing case is a natural-language question the offline mock cannot parse; the real model returns a refusal for it.</p>
@@ -302,6 +319,7 @@ python server.py --mock      # offline demo, no key needed
   </section>
 
   <section id="limits">
+    <div class="eyebrow">06 — Limitations</div>
     <h2>Limitations</h2>
     <p class="lead">Stated against the evidence above.</p>
     <ul>
@@ -313,6 +331,7 @@ python server.py --mock      # offline demo, no key needed
   </section>
 
   <section id="sources">
+    <div class="eyebrow">07 — Sources</div>
     <h2>Sources</h2>
     <p class="lead">Rules come from HKU's official waste-reduction site. These are the authority for every category shown.</p>
     <ul>
