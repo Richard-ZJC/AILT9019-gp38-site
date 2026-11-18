@@ -76,8 +76,18 @@
   main section{padding:40px 0;border-bottom:1px solid var(--line)}
   main section:last-child{border-bottom:none}
   .lead{color:var(--muted);font-size:15px;max-width:68ch;margin:0 0 22px}
-  .callout{border-left:3px solid var(--accent);padding-left:16px;color:var(--muted);font-size:14.5px}
-  .callout b{color:var(--ink)}
+  /* Collapsible explanations — native <details>, no JS */
+  .fold{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);
+        background:var(--surface);margin:0 0 12px}
+  .fold summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:9px 14px;
+                cursor:pointer;list-style:none;font-weight:600;font-size:14.5px;color:var(--ink)}
+  .fold summary::-webkit-details-marker{display:none}
+  .fold summary::before{content:"▸";color:var(--accent);font-size:13px;line-height:1;
+                        transition:transform .15s ease}
+  .fold[open] summary::before{transform:rotate(90deg)}
+  .fold summary:hover{background:var(--accent-soft)}
+  .fold .fold-body{padding:0 14px 12px 32px;color:var(--muted);font-size:14.5px}
+  .fold .fold-body p{margin:0}
   .flow li b{font-weight:700;color:var(--ink)}
 
   /* Facts — stacked on phones */
@@ -211,7 +221,10 @@
       <li><b>Problem.</b> HKU publishes DO / DON'T guides and photos, but turning "this carton" into the right bin still needs domain knowledge.</li>
       <li><b>Not for.</b> Chemicals, e-waste, medical waste and pressurised cans are refused, not sorted. The app does not decide waste policy.</li>
     </ul>
-    <p class="callout"><b>Scope change from the proposal:</b> the daily Smart Recycling Bin stations carry four recycling bins (Paper, Metal, Plastic Bottle, Other Plastic) plus a general-waste bin. Tetra Pak, glass and rechargeable batteries are therefore guided to the re Kiosk, not to a bin that is not there. This replaced an earlier six-way re Kiosk framing.</p>
+    <details class="fold">
+      <summary>Scope change from the proposal</summary>
+      <div class="fold-body">The daily Smart Recycling Bin stations carry four recycling bins (Paper, Metal, Plastic Bottle, Other Plastic) plus a general-waste bin. Tetra Pak, glass and rechargeable batteries are therefore guided to the re Kiosk, not to a bin that is not there. This replaced an earlier six-way re Kiosk framing.</div>
+    </details>
   </section>
 
   <section id="how">
@@ -223,8 +236,14 @@
       <li><b>Match.</b> A deterministic matcher copies a category from <code class="inline">data/rules.json</code>.</li>
       <li><b>Answer.</b> Exact bin, instruction and official source URL.</li>
     </ol>
-    <p class="callout"><b>The clarify branch.</b> When the packaging is ambiguous, the app asks one question with fixed options. You answer; it may ask up to two rounds. On the third round it commits to a <code class="inline">best_guess</code> — labelled and confidence-capped — instead of refusing. Hazard items and out-of-scope requests bypass this and are refused outright.</p>
-    <p class="callout"><b>Key design rule.</b> The AI identifies; it never decides a category. Categories exist only in <code class="inline">data/rules.json</code>, and the matcher is the only component that emits one. If no rule matches, the answer is a refusal — a category is never invented.</p>
+    <details class="fold">
+      <summary>The clarify branch</summary>
+      <div class="fold-body">When the packaging is ambiguous, the app asks one question with fixed options. You answer; it may ask up to two rounds. On the third round it commits to a <code class="inline">best_guess</code> — labelled and confidence-capped — instead of refusing. Hazard items and out-of-scope requests bypass this and are refused outright.</div>
+    </details>
+    <details class="fold">
+      <summary>Key design rule</summary>
+      <div class="fold-body">The AI identifies; it never decides a category. Categories exist only in <code class="inline">data/rules.json</code>, and the matcher is the only component that emits one. If no rule matches, the answer is a refusal — a category is never invented.</div>
+    </details>
   </section>
 
   <section id="built">
@@ -247,7 +266,10 @@
 cd AILT9019-gp38
 python server.py --mock      # offline demo, no key needed
 # open http://localhost:8000</code></pre>
-    <p>For the live AI path, copy <code class="inline">config.example.json</code> to <code class="inline">config.json</code> and add the group key; <code class="inline">config.json</code> is gitignored. Full setup, API-key options and test commands are in the repository README. On macOS, double-clicking <code class="inline">start.command</code> starts the server and opens the browser.</p>
+    <details class="fold">
+      <summary>Live AI setup &amp; API key</summary>
+      <div class="fold-body">Copy <code class="inline">config.example.json</code> to <code class="inline">config.json</code> and add the group key; <code class="inline">config.json</code> is gitignored. Full setup, API-key options and test commands are in the repository README. On macOS, double-clicking <code class="inline">start.command</code> starts the server and opens the browser.</div>
+    </details>
     <h3>A genuine run (captured 18 Nov 2026)</h3>
     <p>Query <code class="inline">Vitasoy lemon tea</code> returned, from the live service:</p>
     <table>
