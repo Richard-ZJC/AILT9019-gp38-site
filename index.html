@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Recycling Helper — AILT9019 gp38</title>
+<meta name="description" content="A brand-aware packaging sorting assistant for HKU campus recycling. Enter a product, get the correct bin and the official rule behind it.">
+<style>
+  :root{
+    --ink:#1c2530; --muted:#5d6b7a; --line:#dde4ea; --bg:#f6f8fa; --card:#fff;
+    --accent:#0f6e56; --accent-soft:#e1f5ee; --warn:#993c1d; --warn-soft:#faece7;
+    --blue:#185fa5; --blue-soft:#e6f1fb; --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+  a{color:var(--blue)}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header{background:var(--card);border-bottom:1px solid var(--line)}
+  .head-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px 0}
+  .brand{font-size:15px;font-weight:600;letter-spacing:.01em}
+  .brand span{display:block;font-size:12px;color:var(--muted);font-weight:400}
+  nav{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+  nav a{text-decoration:none;color:var(--muted)}
+  nav a:hover{color:var(--blue)}
+  .hero{padding:52px 0 40px}
+  .tag{display:inline-block;font-size:12px;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:4px 12px;margin-bottom:16px}
+  h1{font-size:34px;line-height:1.2;margin:0 0 16px;letter-spacing:-.01em}
+  .lede{font-size:17px;color:var(--muted);max-width:680px;margin:0 0 26px}
+  .cta{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-block;padding:11px 18px;border-radius:9px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  section{padding:34px 0;border-top:1px solid var(--line)}
+  h2{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 22px}
+  h3{font-size:15px;margin:22px 0 8px}
+  p{margin:0 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .box .n{font-size:12px;color:var(--accent);font-weight:600;margin-bottom:6px}
+  .box h4{margin:0 0 6px;font-size:15px;font-weight:600}
+  .box p{font-size:13.5px;color:var(--muted);margin:0}
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:6px 0 18px}
+  .step{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-width:150px}
+  .step .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .step strong{display:block;margin:5px 0 4px;font-size:14px}
+  .step small{color:var(--muted);font-size:12.5px;line-height:1.5;display:block}
+  .arrow{align-self:center;color:var(--muted);font-size:18px}
+  .branch{margin-top:12px;background:var(--blue-soft);border:1px solid #c9e0f6;border-radius:var(--radius);padding:16px 18px;font-size:13.5px}
+  .branch b{color:var(--blue)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .tagpill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin:0 4px 4px 0}
+  .tagpill.warn{background:var(--warn-soft);color:var(--warn)}
+  .tagpill.blue{background:var(--blue-soft);color:var(--blue)}
+  pre{background:#111820;color:#dce6f0;border-radius:var(--radius);padding:18px;overflow:auto;font-size:12.5px;line-height:1.55;margin:0}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .inline{background:#eef2f6;border-radius:5px;padding:1px 6px;font-size:12.5px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f0f4f7;font-weight:600;font-size:12.5px;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  .res{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+  .stat{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .stat b{font-size:26px;display:block;letter-spacing:-.02em}
+  .stat span{font-size:12.5px;color:var(--muted)}
+  .note{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding-left:14px;margin-top:14px}
+  footer{padding:30px 0 50px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line)}
+  @media(max-width:600px){h1{font-size:27px}.hero{padding:36px 0 28px}.arrow{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head-in">
+    <div class="brand">Campus Recycling Helper <span>AILT9019 · Group 38 · HKU</span></div>
+    <nav>
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#built">What we built</a>
+      <a href="#run">Try it</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#limits">Limits</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="tag">Brand-aware packaging sorting · HKU campus</span>
+    <h1>Which bin does this packaging go in?</h1>
+    <p class="lede">HKU students and staff face a fixed set of recycling bins but packaging that is rarely obvious — a milk carton, a coffee cup, a noodle pot. This assistant names the packaging from a product or brand, matches it to a published HKU rule, and answers with the exact bin plus the official source. If it genuinely cannot tell, it asks — then commits to a labelled best guess rather than shrugging.</p>
+    <div class="cta">
+      <a class="btn primary" href="#run">See a real result</a>
+      <a class="btn" href="https://github.com/Richard-ZJC/AILT9019-gp38">View the code</a>
+      <a class="btn" href="#how">How it works</a>
+    </div>
+  </div>
+
+  <section id="problem">
+    <h2>Who it is for, and what it is not</h2>
+    <p class="sub">The problem, the users and the boundary of the system.</p>
+    <div class="grid">
+      <div class="box"><div class="n">USERS</div><h4>Anyone sorting on campus</h4><p>Students and staff who know the item but not which of the small set of campus bins or the re Kiosk takes it.</p></div>
+      <div class="box"><div class="n">PROBLEM</div><h4>Rules exist, but are hard to apply</h4><p>HKU publishes DO / DON'T guides and photos. Turning "this carton" into the right bin still needs domain knowledge.</p></div>
+      <div class="box"><div class="n">NOT FOR</div><h4>No guessing with hazmat</h4><p>Chemicals, e-waste, medical waste and pressurised cans are refused, not sorted. It does not decide waste policy.</p></div>
+    </div>
+    <p class="note"><b>Scope change from proposal:</b> the daily Smart Recycling Bin stations on campus carry four recycling bins (Paper, Metal, Plastic Bottle, Other Plastic) plus a general-waste bin. Tetra Pak, glass and rechargeable batteries are therefore guided to the re Kiosk, not to a bin that is not there. This replaced an earlier six-way re Kiosk framing.</p>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="sub">Input → processing → output, with a clarifying branch when the packaging is ambiguous.</p>
+    <div class="flow">
+      <div class="step"><div class="k">Input</div><strong>Product or brand</strong><small>e.g. "Vitasoy lemon tea"</small></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="k">Processing</div><strong>Identify components</strong><small>Keyword layer or AI identifies packaging parts</small></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="k">Processing</div><strong>Match a rule</strong><small>A deterministic matcher copies a category from published rules</small></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="k">Output</div><strong>Bin + source</strong><small>Exact bin, instruction and official URL</small></div>
+    </div>
+    <div class="branch"><b>The clarify branch:</b> when the packaging is ambiguous, the app asks one question with fixed options. You answer; it may ask up to two rounds. On the third round it commits to a <code class="inline">best_guess</code> — labelled and confidence-capped — instead of refusing. Hazard items and out-of-scope requests bypass this and are refused outright.</div>
+    <p class="note"><b>Key design rule:</b> the AI identifies; it never decides a category. Categories exist only in <code class="inline">data/rules.json</code>, and the matcher is the only component that emits one. If no rule matches, the answer is a refusal — a category is never invented.</p>
+  </section>
+
+  <section id="built">
+    <h2>What we built vs what the model provides</h2>
+    <p class="sub">Domain customisation is the rules, the matcher and the safety layer — not the language model.</p>
+    <div class="cards">
+      <div class="box"><h4>Team-built</h4><p><span class="tagpill">16 rules</span><span class="tagpill">deterministic matcher</span><span class="tagpill">clarify state machine</span><span class="tagpill">hazard net</span><span class="tagpill">dual-channel failover</span><span class="tagpill">single-file web UI</span></p></div>
+      <div class="box"><h4>Provided by the model / API</h4><p><span class="tagpill blue">packaging identification</span><span class="tagpill blue">JSON extraction</span><span class="tagpill blue">optional product search</span></p><p style="margin-top:8px">Provider: the course's Alibaba Bailian OpenAI-compatible gateway, model <code class="inline">qwen3.8-flash</code>.</p></div>
+      <div class="box"><h4>Domain customisation</h4><p>Rules transcribed from HKU's official Recycling 101 poster and photo guide, with the <b>bin actually deployed on campus</b> attached to each item. Every answer carries the rule id, the official source URL and the date the rule was verified.</p></div>
+    </div>
+  </section>
+
+  <section id="run">
+    <h2>Try it locally</h2>
+    <p class="sub">Standard library only — no build step, no third-party packages. The keyword path works without a key.</p>
+    <pre><code>git clone https://github.com/Richard-ZJC/AILT9019-gp38
+cd AILT9019-gp38
+python server.py --mock      # offline demo, no key needed
+# open http://localhost:8000</code></pre>
+    <p class="note">For the live AI path, copy <code class="inline">config.example.json</code> to <code class="inline">config.json</code> and add the group key; <code class="inline">config.json</code> is gitignored. Full setup, API-key options and test commands are in the repository README. On macOS, double-clicking <code class="inline">start.command</code> starts the server and opens the browser.</p>
+
+    <h3>A genuine run (captured 18 Nov 2026)</h3>
+    <p>Query <code class="inline">Vitasoy lemon tea</code> returned, from the live service:</p>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>status / mode</td><td><code class="inline">OK</code> / <code class="inline">exact</code> — answered by the keyword layer, no model call</td></tr>
+      <tr><td>component</td><td>carton · tetra pak</td></tr>
+      <tr><td>category / bin</td><td><b>re Kiosk only</b> · <code class="inline">re-kiosk</code></td></tr>
+      <tr><td>instruction</td><td>Empty and rinse the carton, flatten it, then place it in the Tetra Pak slot at the re Kiosk (Run Run Shaw Podium, 24 h).</td></tr>
+      <tr><td>rule / verified</td><td><code class="inline">beverage-carton</code> · 2026-11-17</td></tr>
+      <tr><td>source</td><td><a href="https://wastereduction.hku.hk/photo-guide">HKU re Campaign — Recycling 101 Photo Guide</a></td></tr>
+    </table>
+  </section>
+
+  <section id="evidence">
+    <h2>Evidence and failure cases</h2>
+    <p class="sub">Numbers below are from a fresh run on 18 Nov 2026; harnesses are in the repository's <code class="inline">tests/</code> folder.</p>
+    <div class="res">
+      <div class="stat"><b>26/27</b><span>case suite + 2/2 checks</span></div>
+      <div class="stat"><b>27/27</b><span>AI-plugin / routing checks</span></div>
+      <div class="stat"><b>30/30</b><span>failure · edge · refusal</span></div>
+      <div class="stat"><b>9/9</b><span>server smoke checks</span></div>
+    </div>
+    <table>
+      <tr><th>Case type</th><th>Input</th><th>Observed behaviour</th></tr>
+      <tr><td>Boundary — hazard</td><td><code class="inline">pesticide</code></td><td><b>REFUSE</b> — deterministic hazard net, "local hazard keyword: pesticide". No category emitted.</td></tr>
+      <tr><td>Boundary — disguised can</td><td><code class="inline">aerosol can of deodorant</code></td><td><b>REFUSE</b> — hazard net wins over the metal-can rule.</td></tr>
+      <tr><td>Failure — both AI channels down</td><td>simulated provider outage</td><td><code class="inline">SERVICE_UNAVAILABLE</code> or <code class="inline">best_effort</code> with an actionable instruction — never an invented category.</td></tr>
+      <tr><td>Invalid input</td><td>blank text / malformed JSON</td><td>HTTP <code class="inline">400</code> with a clear message; unknown session <code class="inline">404</code>.</td></tr>
+      <tr><td>Known false positive</td><td><code class="inline">chemical-free cotton tote</code></td><td>Conservatively refused because the hazard regex matches "chemical" — deliberately fails on the safe side.</td></tr>
+    </table>
+    <p class="note">The single non-passing case in the 26/27 suite is a natural-language question that the offline mock cannot parse; the real model returns a refusal for it.</p>
+  </section>
+
+  <section id="limits">
+    <h2>Limitations</h2>
+    <p class="sub">Stated against the evidence above.</p>
+    <div class="grid">
+      <div class="box"><h4>Fixed rule set</h4><p>Only the 16 published rules are covered. Anything outside them is refused rather than guessed. Covered items must be clean and correctly described.</p></div>
+      <div class="box"><h4>Text-first</h4><p>Image upload, fuzzy matching and streaming responses are reserved interfaces, not shipped features. Input is normalised for English; Chinese queries are not guaranteed.</p></div>
+      <div class="box"><h4>Location nuance</h4><p>The official site lists a Glass Bottle slot at two Smart Recycling Bin locations. The app defaults to the re Kiosk, which accepts glass campus-wide — simpler, but not location-aware.</p></div>
+      <div class="box"><h4>Model dependence</h4><p>The AI path needs the course key and network. Without it the keyword path still answers covered items; everything else degrades visibly rather than guessing.</p></div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <h2>Sources</h2>
+    <p class="sub">Rules come from HKU's official waste-reduction site. These are the authority for every category shown.</p>
+    <ul>
+      <li><a href="https://www.wastereduction.hku.hk/recycling-101">HKU Recycling 101</a></li>
+      <li><a href="https://www.wastereduction.hku.hk/_files/ugd/bccd45_652bab3854994da9a05b96ed09580df4.pdf">Recycling 101 poster (PDF)</a></li>
+      <li><a href="https://wastereduction.hku.hk/photo-guide">Recycling 101 Photo Guide</a></li>
+      <li><a href="https://www.wastereduction.hku.hk/re-facilities">HKU re Facilities — which bins exist</a></li>
+    </ul>
+    <p class="note">Repository: <a href="https://github.com/Richard-ZJC/AILT9019-gp38">github.com/Richard-ZJC/AILT9019-gp38</a> (access for teaching staff on request).</p>
+  </section>
+
+  <footer>
+    AILT9019 Group 38 · Campus Recycling Helper · Built for the HKU re Campaign's published rules. No personal data or API keys are exposed on this page.
+  </footer>
+</div>
+</body>
+</html>
